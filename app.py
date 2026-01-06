@@ -63,4 +63,7 @@ def results():
 
 if __name__ == '__main__':
     # Run on all interfaces so it can be accessed publicly
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # Debug mode should be disabled in production for security
+    import os
+    debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
+    app.run(host='0.0.0.0', port=5000, debug=debug_mode)
