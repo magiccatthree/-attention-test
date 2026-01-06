@@ -78,7 +78,7 @@
                         <p class="analysis-average">• 反应偏慢：可以通过训练提高反应速度。</p>
                         {% endif %}
 
-                        {% if results.false_alarms > results.total_trials * 0.2 %}
+                        {% if results.false_alarm_rate|default(0) > 20 %}
                         <p class="analysis-poor">• 冲动性较高：建议在日常生活中培养耐心，减少冲动行为。</p>
                         {% endif %}
                     </div>

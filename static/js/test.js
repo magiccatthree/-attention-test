@@ -1,9 +1,12 @@
 // Test configuration
 const CONFIG = {
     totalTrials: 40,          // Total number of stimuli
-    targetProbability: 0.3,   // 30% are targets (number "1" or high tone)
+    targetCount: 12,          // Fixed number of targets for standardization
     stimulusDuration: 500,    // Display/sound duration in ms
     interStimulusInterval: 1500, // Time between stimuli
+    responseWindow: 2000,     // Total time to respond (stimulus + ISI)
+    minReactionTime: 100,     // Minimum valid reaction time (ms)
+    maxReactionTime: 1000,    // Maximum valid reaction time (ms)
     countdownDuration: 3      // Countdown before test starts
 };
 
@@ -11,6 +14,7 @@ const CONFIG = {
 let testState = {
     currentTrial: 0,
     totalTrials: CONFIG.totalTrials,
+    targetCount: CONFIG.targetCount,
     correctResponses: 0,
     missedTargets: 0,
     falseAlarms: 0,
@@ -19,7 +23,8 @@ let testState = {
     responded: false,
     isTarget: false,
     testRunning: false,
-    stimuli: []
+    stimuli: [],
+    responseWindowTimer: null
 };
 
 // Audio context for generating tones
@@ -72,7 +77,7 @@ function playTone(frequency, duration) {
 // Generate test stimuli sequence
 function generateStimuli() {
     const stimuli = [];
-    const numTargets = Math.floor(CONFIG.totalTrials * CONFIG.targetProbability);
+    const numTargets = CONFIG.targetCount;
     const numNonTargets = CONFIG.totalTrials - numTargets;
 
     // Create targets (1) and non-targets (2-9)
@@ -88,6 +93,11 @@ function generateStimuli() {
     // Shuffle array
     for (let i = stimuli.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
+        [stimuli[i], stimuli[j]] = [stimuli[j], stimuli[i]];
+    }
+
+    return stimuli;
+}
         [stimuli[i], stimuli[j]] = [stimuli[j], stimuli[i]];
     }
 
@@ -126,17 +136,19 @@ function presentStimulus(stimulus) {
     // Hide stimulus after duration
     setTimeout(() => {
         hideVisualStimulus();
-        
-        // Check if response was missed
+    }, CONFIG.stimulusDuration);
+
+    // Set response window - check for missed targets at the end
+    testState.responseWindowTimer = setTimeout(() => {
         if (!testState.responded && testState.isTarget) {
             testState.missedTargets++;
         }
-    }, CONFIG.stimulusDuration);
+    }, CONFIG.responseWindow);
 
-    // Move to next trial after inter-stimulus interval
+    // Move to next trial after response window
     setTimeout(() => {
         nextTrial();
-    }, CONFIG.stimulusDuration + CONFIG.interStimulusInterval);
+    }, CONFIG.responseWindow);
 }
 
 // Handle next trial
@@ -168,10 +180,17 @@ function handleKeyPress(event) {
         testState.responded = true;
         const reactionTime = Date.now() - testState.stimulusStartTime;
 
+        // Validate reaction time (filter out anticipatory and inattentive responses)
+        const isValidReactionTime = reactionTime >= CONFIG.minReactionTime && 
+                                     reactionTime <= CONFIG.maxReactionTime;
+
         if (testState.isTarget) {
             // Correct response
             testState.correctResponses++;
-            testState.reactionTimes.push(reactionTime);
+            // Only record valid reaction times
+            if (isValidReactionTime) {
+                testState.reactionTimes.push(reactionTime);
+            }
         } else {
             // False alarm
             testState.falseAlarms++;
@@ -234,6 +253,7 @@ function endTest() {
     const resultsData = {
         test_mode: TEST_MODE,
         total_trials: testState.totalTrials,
+        target_count: testState.targetCount,
         correct_responses: testState.correctResponses,
         missed_targets: testState.missedTargets,
         false_alarms: testState.falseAlarms,

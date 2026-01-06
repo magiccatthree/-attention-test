@@ -25,6 +25,7 @@ def submit_results():
     # Calculate metrics
     results = {
         'total_trials': data.get('total_trials', 0),
+        'target_count': data.get('target_count', 0),
         'correct_responses': data.get('correct_responses', 0),
         'missed_targets': data.get('missed_targets', 0),
         'false_alarms': data.get('false_alarms', 0),
@@ -34,11 +35,18 @@ def submit_results():
         'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     }
     
-    # Calculate accuracy
-    if results['total_trials'] > 0:
-        results['accuracy'] = (results['correct_responses'] / results['total_trials']) * 100
+    # Calculate accuracy (correct target responses / total targets)
+    if results['target_count'] > 0:
+        results['accuracy'] = (results['correct_responses'] / results['target_count']) * 100
     else:
         results['accuracy'] = 0
+    
+    # Calculate false alarm rate (false alarms / non-targets)
+    non_targets = results['total_trials'] - results['target_count']
+    if non_targets > 0:
+        results['false_alarm_rate'] = (results['false_alarms'] / non_targets) * 100
+    else:
+        results['false_alarm_rate'] = 0
     
     # Store in session for results page
     session['test_results'] = results
