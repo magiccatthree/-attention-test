@@ -98,11 +98,6 @@ function generateStimuli() {
 
     return stimuli;
 }
-        [stimuli[i], stimuli[j]] = [stimuli[j], stimuli[i]];
-    }
-
-    return stimuli;
-}
 
 // Show visual stimulus
 function showVisualStimulus(value) {
