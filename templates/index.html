@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注意力测试</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>注意力测试</h1>
+            <p class="subtitle">基于IVA-CPT持续性注意力测试</p>
+        </header>
+
+        <main>
+            <div class="intro">
+                <h2>测试说明</h2>
+                <p>本测试包含三种模式，用于评估您的持续注意力和反应能力：</p>
+                <ul>
+                    <li><strong>视觉模式：</strong>通过观察屏幕上的数字或图形进行测试</li>
+                    <li><strong>听觉模式：</strong>通过听取声音信号进行测试</li>
+                    <li><strong>视听结合模式：</strong>同时使用视觉和听觉信号进行测试</li>
+                </ul>
+                <p class="instruction">当看到/听到目标刺激（数字"1"或特定音调）时，请快速按<strong>空格键</strong>。</p>
+            </div>
+
+            <div class="test-modes">
+                <div class="mode-card">
+                    <h3>视觉测试</h3>
+                    <p>通过屏幕显示的数字进行测试</p>
+                    <a href="/test/visual" class="btn btn-primary">开始测试</a>
+                </div>
+
+                <div class="mode-card">
+                    <h3>听觉测试</h3>
+                    <p>通过声音信号进行测试</p>
+                    <a href="/test/auditory" class="btn btn-primary">开始测试</a>
+                </div>
+
+                <div class="mode-card">
+                    <h3>视听结合测试</h3>
+                    <p>同时使用视觉和听觉信号</p>
+                    <a href="/test/combined" class="btn btn-primary">开始测试</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="entertainment-notice">仅供娱乐</div>
+</body>
+</html>
