@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注意力测试 - 视觉测试</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h2 id="test-title">视觉测试</h2>
+            <div class="test-info">
+                <span>进度: <span id="progress">0/0</span></span>
+                <span style="margin-left: 20px;">倒计时: <span id="countdown">3</span></span>
+            </div>
+        </div>
+
+        <div id="instruction-screen" class="instruction-screen">
+            <h3>测试说明</h3>
+            <p>当看到数字 <strong>"1"</strong> 或听到高音调时，请快速按<strong>空格键</strong>。</p>
+            <p>其他情况请<strong>不要</strong>按键。</p>
+            <p class="highlight">请保持注意力集中！</p>
+            <button id="start-btn" class="btn btn-large">开始测试</button>
+        </div>
+
+        <div id="stimulus-area" class="stimulus-area" style="display: none;">
+            <div id="visual-stimulus"></div>
+        </div>
+
+        <div id="loading-screen" class="loading-screen" style="display: none;">
+            <div class="spinner"></div>
+            <p>正在生成测试报告...</p>
+        </div>
+    </div>
+
+    <div class="entertainment-notice">仅供娱乐</div>
+
+    <script>
+        const TEST_MODE = "visual";
+    </script>
+    <script src="static/js/test-static.js"></script>
+</body>
+</html>
