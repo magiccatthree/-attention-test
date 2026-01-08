@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试报告 - 注意力测试</title>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>测试报告</h1>
+            <p class="subtitle" id="timestamp"></p>
+        </header>
+
+        <main>
+            <div class="results-summary">
+                <h2 id="test-mode-title">测试模式: </h2>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">总测试次数</div>
+                        <div class="metric-value" id="total-trials">0</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-label">正确响应</div>
+                        <div class="metric-value success" id="correct-responses">0</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-label">漏报次数</div>
+                        <div class="metric-value warning" id="missed-targets">0</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-label">误报次数</div>
+                        <div class="metric-value error" id="false-alarms">0</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-label">正确率</div>
+                        <div class="metric-value" id="accuracy">0%</div>
+                    </div>
+
+                    <div class="metric-card">
+                        <div class="metric-label">平均反应时间</div>
+                        <div class="metric-value" id="avg-reaction-time">0 ms</div>
+                    </div>
+                </div>
+
+                <div class="performance-analysis">
+                    <h3>表现分析</h3>
+                    <div class="analysis-content" id="analysis-content">
+                    </div>
+                </div>
+
+                <div class="disclaimer">
+                    <p><strong>注意：</strong>本测试仅供参考和娱乐，不能作为医学诊断依据。如有注意力相关困扰，请咨询专业医疗机构。</p>
+                </div>
+
+                <div class="actions">
+                    <a href="index.html" class="btn btn-primary">返回首页</a>
+                    <button onclick="window.print()" class="btn btn-secondary">打印报告</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div class="entertainment-notice">仅供娱乐</div>
+    
+    <script src="static/js/results-static.js"></script>
+</body>
+</html>
